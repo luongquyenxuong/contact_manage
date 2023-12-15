@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-notes
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: notes
+      createTable:
+        tableName: notes
+        columns:
+          - column:
+              name: id
+              type: BINARY(16)
+              constraints:
+                primaryKey: true
+                nullable: false
+          - column:
+              name: note_text
+              type: VARCHAR(255)
+              constraints:
+                nullable: false

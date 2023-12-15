@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-contact-group
+      author: xuong
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: contact_group
+      changes:
+        - createTable:
+            tableName: contact_group
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable:
+              - column:
+                  name: id_contact
+                  type: BINARY(16)
+                  constraints:
+                    references: contacts(id)  # Khóa ngoại tham chiếu đến bảng "contacts"
+                    nullable: true
+                    foreignKeyName: fk_contacts_contact_group  # Đặt tên cho khóa ngoại
+              - column:
+                  name: id_group
+                  type: BINARY(16)
+                  constraints:
+                    references: groups(id)  # Khóa ngoại tham chiếu đến bảng "groups"
+                    nullable: true
+                    foreignKeyName: fk_groups_contact_group  # Đặt tên cho khóa ngoại

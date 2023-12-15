@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-events
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: events
+      changes:
+        - createTable:
+            tableName: events
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: event_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: event_date
+                  type: Date
+                  constraints:
+                    nullable: false

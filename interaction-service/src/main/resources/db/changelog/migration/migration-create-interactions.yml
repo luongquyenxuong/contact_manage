@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-interactions
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: interactions
+      createTable:
+        tableName: interactions
+        columns:
+          - column:
+              name: id
+              type: BINARY(16)
+              constraints:
+                primaryKey: true
+                nullable: false
+          - column:
+              name: interaction_type
+              type: VARCHAR(255)
+              constraints:
+                nullable: false
+          - column:
+              name: interaction_date
+              type: Date
+              constraints:
+                nullable: false
+
+  - changeSet:
+      id: add-columns-to-interactions
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: columns already exist
+        not:
+          or:
+            - columnExists:
+                tableName: interactions
+                columnName: content
+            - columnExists:
+                tableName: interactions
+                columnName: id_contact
+        and:
+          - not:
+              or:
+                - foreignKeyConstraintExists:
+                    baseTableSchemaName: manage_contact
+                    baseTableName: interactions
+                    constraintName: fk_contact
+      changes:
+        - addColumn:
+            tableName: interactions
+            columns:
+              - column:
+                  name: content
+                  type: TEXT  # Điều chỉnh kiểu dữ liệu tùy theo cơ sở dữ liệu của bạn
+                  constraints:
+                    nullable: true  # Có thể null tùy vào yêu cầu của bạn
+        - addColumn:
+            tableName: interactions
+            columns:
+              - column:
+                  name: id_contact
+                  type: BINARY(16)
+                  constraints:
+                    references: contacts(id)  # Khóa ngoại tham chiếu đến bảng "Liên hệ"
+                    nullable: true
+                    foreignKeyName: fk_contact  # Đặt tên cho khóa ngoại
+  - changeSet:
+      id: add-columns-id-user-to-interactions
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: columns already exist
+        not:
+          or:
+            - columnExists:
+                tableName: interactions
+                columnName: id_user
+        and:
+          - not:
+              or:
+                - foreignKeyConstraintExists:
+                    baseTableSchemaName: manage_contact
+                    baseTableName: interactions
+                    constraintName: fk_user
+      changes:
+          - addColumn:
+              tableName: interactions
+              columns:
+                - column:
+                    name: id_user
+                    type: BINARY(16)
+                    constraints:
+                      references: users(id)  # Khóa ngoại tham chiếu đến bảng "User"
+                      nullable: true
+                      foreignKeyName: fk_user  # Đặt tên cho khóa ngoại

@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-contacts
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: contacts
+      changes:
+        - createTable:
+            tableName: contacts
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: CHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: add-columns-to-contacts
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: columns already exist
+        not:
+          - columnExists:
+              tableName: contacts
+              columnName: created_date
+          - columnExists:
+              tableName: contacts
+              columnName: updated_date
+          - columnExists:
+              tableName: contacts
+              columnName: status
+      changes:
+        - addColumn:
+            tableName: contacts
+            columns:
+              - column:
+                  name: created_date
+                  type: TIMESTAMP
+              - column:
+                  name: deleted_date
+                  type: TIMESTAMP
+              - column:
+                  name: updated_date
+                  type: TIMESTAMP
+              - column:
+                  name: status
+                  type: CHAR(20)
+                  constraints:
+                    nullable: false
+

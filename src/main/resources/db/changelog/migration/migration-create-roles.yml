@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-roles
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: roles
+      createTable:
+        tableName: roles
+        columns:
+          - column:
+              name: id
+              type: INT
+              constraints:
+                primaryKey: true
+                nullable: false
+          - column:
+              name: role_name
+              type: VARCHAR(255)

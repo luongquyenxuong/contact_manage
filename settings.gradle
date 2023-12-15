@@ -1,0 +1,3 @@
+rootProject.name = 'Manage_contacts'
+include ':interaction-service'
+

@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-tags
+      author: xuong
+      runAlways: true
+      preConditions:
+        onFail: CONTINUE
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: tags
+      createTable:
+        tableName: tags
+        columns:
+          - column:
+              name: id
+              type: BINARY(16)
+              constraints:
+                primaryKey: true
+                nullable: false
+          - column:
+              name: tag_name
+              type: VARCHAR(255)
+              constraints:
+                nullable: false

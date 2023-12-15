@@ -1,0 +1,3 @@
+rootProject.name = 'interaction-service'
+// Trong settings.gradle của dự án chính
+include ':Manage_contacts'

@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user-contact
+      author: xuong
+      preConditions:
+        onFail: MARK_RAN
+        onErrorMessage: table already exists
+        not:
+          tableExists:
+            tableName: user_contact
+      changes:
+        - createTable:
+            tableName: user_contact
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable:
+              - column:
+                  name: id_contact
+                  type: BINARY(16)
+                  constraints:
+                    references: contacts(id)  # Khóa ngoại tham chiếu đến bảng "contacts"
+                    nullable: true
+                    foreignKeyName: fk_contacts_user_contact  # Đặt tên cho khóa ngoại
+              - column:
+                  name: id_user
+                  type: BINARY(16)
+                  constraints:
+                    references: users(id)  # Khóa ngoại tham chiếu đến bảng "users"
+                    nullable: true
+                    foreignKeyName: fk_users_user_contact  # Đặt tên cho khóa ngoại

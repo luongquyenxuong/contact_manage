@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migration/migration-create-roles.yml
+  - include:
+      file: db/changelog/migration/migration-create-users.yml
+  - include:
+      file: db/changelog/migration/migration-create-contacts.yml
+  - include:
+      file: db/changelog/migration/migration-create-notes.yml
+  - include:
+      file: db/changelog/migration/migration-create-groups.yml
+  - include:
+      file: db/changelog/migration/migration-create-tags.yml
+  - include:
+      file: db/changelog/migration/migration-create-contact-group.yml
+  - include:
+      file: db/changelog/migration/migration-create-user-contact.yml
+
